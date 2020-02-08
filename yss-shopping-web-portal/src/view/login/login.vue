@@ -41,7 +41,9 @@ export default {
             name: this.$config.homeName
           })
         } else if (res.data.code == 0) {
-          alert(JSON.stringify(res.data.msg))
+          this.$Notice.error({
+            desc: res.data.msg
+          });
         }
       })
     }

@@ -52,79 +52,106 @@ export default [
   },
 
 
+  // {
+  //   name: 'systemmanager',
+  //   path: '/systemmanager',
+  //   meta: {
+  //     icon: 'logo-buffer',
+  //     title: '系统管理',
+  //     showAlways: true,
+  //     notCache: true
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       name: 'systempage',
+  //       path: '/systempage',
+  //       meta: {
+  //         icon: 'md-apps',
+  //         title: '系统列表',
+  //         notCache: true
+  //       },
+  //       component: () => import('_p/system/systemPage.vue')
+  //     }
+  //   ]
+  // },
+
+
+  // {
+  //   name: 'menumanager',
+  //   path: '/menumanager',
+  //   meta: {
+  //     icon: 'logo-buffer',
+  //     title: '菜单管理',
+  //     showAlways: true,
+  //     notCache: true
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       name: 'menupage',
+  //       path: '/menupage',
+  //       meta: {
+  //         icon: 'md-apps',
+  //         title: '菜单列表',
+  //         notCache: true
+  //       },
+  //       component: () => import('_p/menu/menuPage.vue')
+  //     }
+  //   ]
+  // },
+
+
+  // {
+  //   name: 'rolemanager',
+  //   path: '/rolemanager',
+  //   meta: {
+  //     icon: 'logo-buffer',
+  //     title: '角色管理',
+  //     showAlways: true,
+  //     notCache: true
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       name: 'rolepage',
+  //       path: '/rolepage',
+  //       meta: {
+  //         icon: 'md-apps',
+  //         title: '角色列表',
+  //         notCache: true
+  //       },
+  //       component: () => import('_p/role/rolePage.vue')
+  //     }
+  //   ]
+  // },
+
+
+  
   {
-    name: 'systemmanager',
-    path: '/systemmanager',
+    name: 'userManager',
+    path: '/userManager',
     meta: {
       icon: 'logo-buffer',
-      title: '系统管理',
+      title: '用户管理',
       showAlways: true,
       notCache: true
     },
     component: Main,
     children: [
       {
-        name: 'systempage',
-        path: '/systempage',
-        meta: {
-          icon: 'md-apps',
-          title: '系统列表',
-          notCache: true
-        },
-        component: () => import('_p/system/systemPage.vue')
-      }
-    ]
-  },
-
-
-  {
-    name: 'menumanager',
-    path: '/menumanager',
-    meta: {
-      icon: 'logo-buffer',
-      title: '菜单管理',
-      showAlways: true,
-      notCache: true
-    },
-    component: Main,
-    children: [
-      {
-        name: 'menupage',
-        path: '/menupage',
+        name: 'menuPage',
+        path: '/menuPage',
         meta: {
           icon: 'md-apps',
           title: '菜单列表',
           notCache: true
         },
-        component: () => import('_p/menu/menuPage.vue')
+        component: () => import('_p/userManager/menu/menuPage.vue')
       }
     ]
   },
 
-
-  {
-    name: 'rolemanager',
-    path: '/rolemanager',
-    meta: {
-      icon: 'logo-buffer',
-      title: '角色管理',
-      showAlways: true,
-      notCache: true
-    },
-    component: Main,
-    children: [
-      {
-        name: 'rolepage',
-        path: '/rolepage',
-        meta: {
-          icon: 'md-apps',
-          title: '角色列表',
-          notCache: true
-        },
-        component: () => import('_p/role/rolePage.vue')
-      }
-    ]
-  },
 
 
 

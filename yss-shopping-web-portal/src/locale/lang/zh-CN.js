@@ -1,13 +1,19 @@
 export default {
   home: '首页',
-  systemmanager: '系统管理',
-  systempage: '系统列表',
-  menumanager: '菜单管理',
-  menupage: '菜单列表',
-  rolemanager: '角色管理',
-  rolepage: '角色列表',
-  roledetailpage: '角色详情',
+  // systemmanager: '系统管理',
+  // systempage: '系统列表',
+  // menumanager: '菜单管理',
+  // menupage: '菜单列表',
+  // rolemanager: '角色管理',
+  // rolepage: '角色列表',
+  // roledetailpage: '角色详情',
 
+
+
+  userManager: '用户管理',
+  userPage: '用户列表',
+  rolePage: '角色列表',
+  menuPage: '菜单列表',
 
 
 
