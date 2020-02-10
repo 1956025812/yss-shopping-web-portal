@@ -26,19 +26,27 @@ export default {
         if (res.data.code == 1) {
           let sysMenuOutVOList = res.data.data;
           if (null != sysMenuOutVOList && sysMenuOutVOList.length > 0) {
-            sysMenuOutVOList.forEach(eachSysMenuOutVO => {
-              let menuTreeNode = new Object();
-              menuTreeNode.loading = false;
-              menuTreeNode.expand = false;
-              menuTreeNode.mid = eachSysMenuOutVO.mid;
-              menuTreeNode.level = eachSysMenuOutVO.level;
-              menuTreeNode.menuCode = eachSysMenuOutVO.menuCode;
-              menuTreeNode.title = eachSysMenuOutVO.menuName;
-              menuTreeNode.parentId = eachSysMenuOutVO.parentId;
-
-              // TODO 怎么按层级结构拼接
-              this.menuTreeData.push(menuTreeNode);
-            });
+            // 递归方式拼接树状结构数据
+            let makeupMenuTreeData = function(dataList, parentId) {
+              let treeDataArray = [];
+              dataList.forEach(eachData => {
+                if (eachData.parentId == parentId) {
+                  let newNode = {
+                    loading: false,
+                    expand: false,
+                    mid: eachData.mid,
+                    level: eachData.level,
+                    menuCode: eachData.menuCode,
+                    title: eachData.menuName,
+                    parentId: eachData.parentId,
+                    children: makeupMenuTreeData(dataList, eachData.mid)
+                  };
+                  treeDataArray.push(newNode);
+                }
+              });
+              return treeDataArray;
+            };
+            this.menuTreeData = makeupMenuTreeData(sysMenuOutVOList, 0);
           }
         } else if (res.data.code == 0) {
           this.$Notice.error({
