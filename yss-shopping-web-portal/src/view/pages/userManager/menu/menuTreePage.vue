@@ -27,26 +27,10 @@ export default {
           let sysMenuOutVOList = res.data.data;
           if (null != sysMenuOutVOList && sysMenuOutVOList.length > 0) {
             // 递归方式拼接树状结构数据
-            let makeupMenuTreeData = function(dataList, parentId) {
-              let treeDataArray = [];
-              dataList.forEach(eachData => {
-                if (eachData.parentId == parentId) {
-                  let newNode = {
-                    loading: false,
-                    expand: false,
-                    mid: eachData.mid,
-                    level: eachData.level,
-                    menuCode: eachData.menuCode,
-                    title: eachData.menuName,
-                    parentId: eachData.parentId,
-                    children: makeupMenuTreeData(dataList, eachData.mid)
-                  };
-                  treeDataArray.push(newNode);
-                }
-              });
-              return treeDataArray;
-            };
-            this.menuTreeData = makeupMenuTreeData(sysMenuOutVOList, 0);
+            this.menuTreeData = this.$options.methods.makeupTreeData(
+              sysMenuOutVOList,
+              0
+            );
           }
         } else if (res.data.code == 0) {
           this.$Notice.error({
@@ -54,6 +38,29 @@ export default {
           });
         }
       });
+    },
+
+    /**
+     * 递归方式拼接树状结构数据
+     */
+    makeupTreeData(dataList, parentId) {
+      let treeDataArray = [];
+      dataList.forEach(eachData => {
+        if (eachData.parentId == parentId) {
+          let newNode = {
+            loading: false,
+            expand: false,
+            mid: eachData.mid,
+            level: eachData.level,
+            menuCode: eachData.menuCode,
+            title: eachData.menuName,
+            parentId: eachData.parentId,
+            children: this.makeupTreeData(dataList, eachData.mid)
+          };
+          treeDataArray.push(newNode);
+        }
+      });
+      return treeDataArray;
     }
   },
 
