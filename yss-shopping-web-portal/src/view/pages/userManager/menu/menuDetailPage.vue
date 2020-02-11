@@ -1,36 +1,24 @@
 <template>
   <div>
-    <div>
-      <Card :bordered="false" title="菜单详情">
+    <div v-if="menuDetailPageShowFlag">
+      <Card :bordered="false" title="页面详情">
         <Form :label-width="80">
           <Row>
             <Col span="10" style="float: left">
-              <FormItem label="菜单名称">
+              <FormItem label="名称">
                 <Input readonly v-model="menuName" />
               </FormItem>
             </Col>
             <Col span="10" style="float: right">
-              <FormItem label="类型">
-                <Input readonly v-model="menuTypeName" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="10" style="float: left">
-              <FormItem label="菜单代码">
+              <FormItem label="代码">
                 <Input readonly v-model="menuCode" />
               </FormItem>
             </Col>
-            <Col span="10" style="float: right">
-              <FormItem label="上级菜单">
-                <Input readonly v-model="parentMenuName" />
-              </FormItem>
-            </Col>
           </Row>
           <Row>
             <Col span="10" style="float: left">
-              <FormItem label="层级">
-                <Input readonly v-model="level" />
+              <FormItem label="URL">
+                <Input readonly v-model="menuUrl" />
               </FormItem>
             </Col>
             <Col span="10" style="float: right">
@@ -41,25 +29,13 @@
           </Row>
           <Row>
             <Col span="10" style="float: left">
-              <FormItem label="创建信息">
-                <Input readonly v-model="createInfo" />
+              <FormItem label="层级">
+                <Input readonly v-model="level" />
               </FormItem>
             </Col>
             <Col span="10" style="float: right">
-              <FormItem label="创建时间">
-                <Input readonly v-model="createTime" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="10" style="float: left">
-              <FormItem label="修改信息">
-                <Input readonly v-model="updateInfo" />
-              </FormItem>
-            </Col>
-            <Col span="10" style="float: right">
-              <FormItem label="修改时间">
-                <Input readonly v-model="updateTime" />
+              <FormItem label="上级">
+                <Input readonly v-model="parentMenuName" />
               </FormItem>
             </Col>
           </Row>
@@ -91,33 +67,50 @@
 <script>
 import { getToken } from "@/libs/util";
 import { selectSystemDetailAPI } from "@/api/system/system";
-import { selectSysMenuDetailAPI } from "@/api/menu/menu";
+import { selectSysMenuDetailAPI } from "@/api/userManager/menu.js";
 
 export default {
   name: "MenuDetailPageComponent",
   components: {},
   data() {
     return {
+      menuDetailPageShowFlag: false,
       mid: null,
-      menuTypeName: null,
-      menuCode: null,
       menuName: null,
-      parentMenuName: null,
-      level: null,
+      menuCode: null,
+      menuUrl: null,
       state: null,
-      createInfo: null,
-      createTime: null,
-      updateInfo: null,
-      updateTime: null,
+      level: null,
+      parentMenuName: null,
       remark: null
     };
   },
 
   methods: {
     /**
-     * 查询系统或菜单详情
+     * 查询菜单详情
      */
-    selectSystemOrMenuDetail(node) {}
+    selectMenuDetail(node) {
+      this.menuDetailPageShowFlag = true;
+      this.mid = node.mid;
+      let params = new Object();
+      params.mid = node.mid;
+      selectSysMenuDetailAPI(params).then(res => {
+        if (res.data.code == 1) {
+          this.menuName = res.data.data.menuName;
+          this.menuCode = res.data.data.menuCode;
+          this.menuUrl = res.data.data.menuUrl;
+          this.state = res.data.data.state;
+          this.level = res.data.data.level;
+          this.parentMenuName = res.data.data.parentMenuName;
+          this.remark = res.data.data.remark;
+        } else if (res.data.code == 0) {
+          this.$Notice.error({
+            desc: res.data.msg
+          });
+        }
+      });
+    }
   },
 
   created() {}

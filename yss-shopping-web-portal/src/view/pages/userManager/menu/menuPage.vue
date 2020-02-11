@@ -10,13 +10,15 @@
       </div>
 
       <div slot="right" class="demo-split-pane">
-        <!-- 右上：系统或菜单详情组件 -->
-        <div>系统或菜单详情组件</div>
+        <!-- 右上：页面详情组件 -->
+        <div>
+          <MenuDetailPageComponent ref="MenuDetailPageComponentRef"></MenuDetailPageComponent>
+        </div>
 
         <br />
 
-        <!-- 右下: 子菜单列表或按钮组件  -->
-        <div>子菜单列表组件</div>
+        <!-- 右下: 子页面列表或按钮组件  -->
+        <div>子页面列表或按钮列表组件</div>
       </div>
     </Split>
   </div>
@@ -26,9 +28,10 @@
 <script>
 import { setToken, getToken, removeArrayElement } from "@/libs/util.js";
 import MenuTreePageComponent from "_p/userManager/menu/menuTreePage.vue";
+import MenuDetailPageComponent from "_p/userManager/menu/menuDetailPage.vue";
 
 export default {
-  components: { MenuTreePageComponent },
+  components: { MenuTreePageComponent, MenuDetailPageComponent },
   data() {
     return {
       leftRightSplit: 0.2
@@ -37,11 +40,13 @@ export default {
 
   methods: {
     clickMenuTreeNode2ParentEvent(node) {
-      // 查询右上侧菜单详情TODO
-      console.log(JSON.stringify(node));
+      // 查询右上侧菜单详情
+      this.$options.methods.selectMenuDetail.bind(this)(node);
     },
 
-
+    selectMenuDetail(node) {
+      this.$refs.MenuDetailPageComponentRef.selectMenuDetail(node);
+    }
   },
 
   /**
