@@ -17,8 +17,10 @@
 
         <br />
 
-        <!-- 右下: 子页面列表或按钮组件  -->
-        <div>子页面列表或按钮列表组件</div>
+        <!-- 右下: 子菜单列表  -->
+        <div>
+          <MenuChildrenPageComponent ref="MenuChildrenPageComponentRef"></MenuChildrenPageComponent>
+        </div>
       </div>
     </Split>
   </div>
@@ -29,9 +31,14 @@
 import { setToken, getToken, removeArrayElement } from "@/libs/util.js";
 import MenuTreePageComponent from "_p/userManager/menu/menuTreePage.vue";
 import MenuDetailPageComponent from "_p/userManager/menu/menuDetailPage.vue";
+import MenuChildrenPageComponent from "_p/userManager/menu/menuChildrenPage.vue";
 
 export default {
-  components: { MenuTreePageComponent, MenuDetailPageComponent },
+  components: {
+    MenuTreePageComponent,
+    MenuDetailPageComponent,
+    MenuChildrenPageComponent
+  },
   data() {
     return {
       leftRightSplit: 0.2
@@ -39,13 +46,29 @@ export default {
   },
 
   methods: {
+    /**
+     * 点击菜单树节点事件
+     */
     clickMenuTreeNode2ParentEvent(node) {
       // 查询右上侧菜单详情
       this.$options.methods.selectMenuDetail.bind(this)(node);
+
+      // 查看右下侧子菜单列表
+      this.$options.methods.selectMenuChildrenList.bind(this)(node);
     },
 
+    /**
+     * 查看菜单详情
+     */
     selectMenuDetail(node) {
       this.$refs.MenuDetailPageComponentRef.selectMenuDetail(node);
+    },
+
+    /**
+     * 查看子菜单列表
+     */
+    selectMenuChildrenList(node) {
+      this.$refs.MenuChildrenPageComponentRef.selectMenuChildrenList(node);
     }
   },
 
