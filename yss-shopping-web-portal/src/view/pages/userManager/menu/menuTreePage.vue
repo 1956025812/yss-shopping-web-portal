@@ -1,5 +1,13 @@
 <template>
-  <Tree ref="MenuTreePageRef" :data="menuTreeData" @on-select-change="clickMenuTreeNode"></Tree>
+  <div>
+    <Card>
+      <p slot="title">页面列表</p>
+      <Button slot="extra" type="primary">新增</Button>
+      <div>
+        <Tree ref="MenuTreePageRef" :data="menuTreeData" @on-select-change="clickMenuTreeNode"></Tree>
+      </div>
+    </Card>
+  </div>
 </template>
 <script>
 import { getToken } from "@/libs/util.js";
