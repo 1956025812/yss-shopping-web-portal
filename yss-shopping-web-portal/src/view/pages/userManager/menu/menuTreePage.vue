@@ -1,5 +1,5 @@
 <template>
-  <Tree :data="menuTreeData"></Tree>
+  <Tree ref="MenuTreePageRef" :data="menuTreeData" @on-select-change="clickMenuTreeNode"></Tree>
 </template>
 <script>
 import { getToken } from "@/libs/util.js";
@@ -61,6 +61,14 @@ export default {
         }
       });
       return treeDataArray;
+    },
+
+    /**
+     * 点击菜单树节点时间
+     */
+    clickMenuTreeNode(nodes, node) {
+      // 通过自定义的方法传递选中的节点数据到父组件中
+      this.$emit("clickMenuTreeNode2ParentEvent", node);
     }
   },
 

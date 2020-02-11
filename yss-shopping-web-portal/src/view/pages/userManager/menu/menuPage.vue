@@ -3,7 +3,10 @@
     <Split v-model="leftRightSplit" min="280px">
       <div slot="left" class="demo-split-pane">
         <!-- 左：菜单树列表组件 -->
-        <MenuTreePageComponent ref="MenuTreePageComponentRef"></MenuTreePageComponent>
+        <MenuTreePageComponent
+          ref="MenuPageComponentRef"
+          v-on:clickMenuTreeNode2ParentEvent="clickMenuTreeNode2ParentEvent"
+        ></MenuTreePageComponent>
       </div>
 
       <div slot="right" class="demo-split-pane">
@@ -32,7 +35,14 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    clickMenuTreeNode2ParentEvent(node) {
+      // 查询右上侧菜单详情TODO
+      console.log(JSON.stringify(node));
+    },
+
+
+  },
 
   /**
    * 初始化页面 页面加载的时候执行
