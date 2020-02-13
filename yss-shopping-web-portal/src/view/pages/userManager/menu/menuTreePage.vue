@@ -2,19 +2,26 @@
   <div>
     <Card>
       <p slot="title">页面列表</p>
-      <Button slot="extra" type="primary">新增</Button>
+      <Button slot="extra" type="primary" @click="openMenuPageSavePageModal">新增</Button>
       <div>
         <Tree ref="MenuTreePageRef" :data="menuTreeData" @on-select-change="clickMenuTreeNode"></Tree>
       </div>
     </Card>
+
+    <!-- 新增菜单页面弹窗组件 -->
+    <MenuPageSavePageComponent ref="MenuPageSavePageComponentRef" style="display: none"></MenuPageSavePageComponent>
   </div>
 </template>
 <script>
 import { getToken } from "@/libs/util.js";
 import { selectSysMenuListAPI } from "@/api/userManager/menu.js";
+import MenuPageSavePageComponent from "_p/userManager/menu/menuPageSavePage.vue";
 
 export default {
   name: "MenuTreePageComponent",
+  components: {
+    MenuPageSavePageComponent
+  },
   data() {
     return {
       menuTreeData: []
@@ -77,6 +84,13 @@ export default {
     clickMenuTreeNode(nodes, node) {
       // 通过自定义的方法传递选中的节点数据到父组件中
       this.$emit("clickMenuTreeNode2ParentEvent", node);
+    },
+
+    /**
+     * 打开新增菜单页面弹窗组件
+     */
+    openMenuPageSavePageModal() {
+      this.$refs.MenuPageSavePageComponentRef.openMenuPageSavePageModal();
     }
   },
 
