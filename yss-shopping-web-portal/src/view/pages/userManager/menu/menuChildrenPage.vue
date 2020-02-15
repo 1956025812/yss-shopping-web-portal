@@ -169,7 +169,13 @@ export default {
     }
   },
 
-  created() {}
+  created() {
+    // 监听全局事件hideMenuChildrenPageComponentEvent  隐藏子菜单列表组件
+    let _this = this;
+    this.bus.$on("hideMenuChildrenPageComponentEvent", function(data) {
+      _this.showMenuChildrenPageFlag = false;
+    });
+  }
 };
 </script>
 

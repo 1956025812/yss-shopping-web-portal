@@ -149,9 +149,9 @@ export default {
               // 刷新左侧菜单树列表
               this.$parent.initMenuTreeData();
 
-              // 关闭页面详情和子菜单列表 TODO
-              // this.$parent.$parent.MenuDetailPageComponentRef.menuDetailPageShowFlag = false;
-              // this.$parent.$parent.MenuDetailPageComponentRef.showMenuChildrenPageFlag = false;
+              // 调用全局监听事件关闭页面详情和子菜单列表
+              this.bus.$emit("hideMenuDetailPageComponentEvent");
+              this.bus.$emit("hideMenuChildrenPageComponentEvent");
             } else if (res.data.code == 0) {
               this.$Notice.error({
                 desc: res.data.msg

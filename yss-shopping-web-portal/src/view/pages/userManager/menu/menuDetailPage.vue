@@ -113,6 +113,12 @@ export default {
     }
   },
 
-  created() {}
+  created() {
+    // 监听全局事件hideMenuDetailPageComponentEvent  隐藏菜单詳情组件
+    let _this = this;
+    this.bus.$on("hideMenuDetailPageComponentEvent", function(data) {
+      _this.menuDetailPageShowFlag = false;
+    });
+  }
 };
 </script>
