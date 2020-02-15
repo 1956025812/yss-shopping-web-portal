@@ -3,14 +3,21 @@
     <div v-if="showMenuChildrenPageFlag">
       <Card>
         <p slot="title">子菜单列表</p>
-        <Button slot="extra" type="primary" @click="openAddMenuModal()">新增</Button>
-
+        <Button
+          slot="extra"
+          type="primary"
+          @click="openSaveMenuButtonModal()"
+          :disabled="openSaveMenuButtonDisableFlag"
+        >新增按钮</Button>
         <!-- 子菜单列表 -->
         <div>
           <Table border :columns="menuChildrenColumns" :data="menuChildrenListTableData"></Table>
         </div>
       </Card>
     </div>
+
+    <!-- 新增子菜单按钮弹窗组件 -->
+    <MenuButtonSavePageComponent ref="MenuButtonSavePageComponentRef" style="display: none"></MenuButtonSavePageComponent>
   </div>
 </template>
 
@@ -19,14 +26,18 @@
 <script>
 import { getToken } from "@/libs/util";
 import { selectSysMenuListAPI } from "@/api/userManager/menu.js";
+import MenuButtonSavePageComponent from "_p/userManager/menu/menuButtonSavePage.vue";
 
 export default {
   name: "MenuChildrenPageComponent",
-  components: {},
+  components: {
+    MenuButtonSavePageComponent
+  },
   data() {
     return {
       showMenuChildrenPageFlag: false,
-      node: null,
+      openSaveMenuButtonDisableFlag: false,
+      selectedNode: null,
       menuChildrenListTableData: [],
       menuChildrenColumns: [
         {
@@ -154,18 +165,37 @@ export default {
      */
     selectMenuChildrenList(node) {
       this.showMenuChildrenPageFlag = true;
+      this.openSaveMenuButtonDisableFlag = false;
+      this.selectedNode = node;
 
       let params = new Object();
       params.parmentId = node.mid;
       selectSysMenuListAPI(params).then(res => {
         if (res.data.code == 1) {
           this.menuChildrenListTableData = res.data.data;
+
+          // 如果子菜单不为空并且有页面类型的子菜单时禁用新增按钮按钮
+          for (let i = 0; i < this.menuChildrenListTableData.length; i++) {
+            if (this.menuChildrenListTableData[i].menuType == 1) {
+              this.openSaveMenuButtonDisableFlag = true;
+              break;
+            }
+          }
         } else if (res.data.code == 0) {
           this.$Notice.error({
             desc: res.data.msg
           });
         }
       });
+    },
+
+    /**
+     * 打开新增菜单按钮弹窗组件
+     */
+    openSaveMenuButtonModal() {
+      this.$refs.MenuButtonSavePageComponentRef.openMenuButtonSavePageModal(
+        this.selectedNode
+      );
     }
   },
 

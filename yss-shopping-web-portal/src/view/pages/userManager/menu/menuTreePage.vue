@@ -2,7 +2,7 @@
   <div>
     <Card>
       <p slot="title">页面列表</p>
-      <Button slot="extra" type="primary" @click="openMenuPageSavePageModal">新增</Button>
+      <Button slot="extra" type="primary" @click="openMenuPageSavePageModal">新增页面</Button>
       <div>
         <Tree ref="MenuTreePageRef" :data="menuTreeData" @on-select-change="clickMenuTreeNode"></Tree>
       </div>
