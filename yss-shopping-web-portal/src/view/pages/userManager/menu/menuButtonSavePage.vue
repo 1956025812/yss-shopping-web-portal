@@ -18,7 +18,7 @@
     >
       <Form ref="FormValidateRef" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="所属页面" prop="parentId">
-          <Select v-model="formValidate.parentMenuId" :clearable="true">
+          <Select v-model="formValidate.parentMenuId" :clearable="true" :disabled="true">
             <Option
               :value="formValidate.parentMenuId"
               :key="formValidate.parentMenuId"
@@ -123,7 +123,7 @@ export default {
       this.$refs.FormValidateRef.validate(valid => {
         if (valid) {
           let params = new Object();
-          params.parentId = this.formValidate.parentMenuId;
+          params.parentId = this.selectedNode.mid;
           params.menuType = 2;
           params.menuCode = this.formValidate.menuCode;
           params.menuName = this.formValidate.menuName;
