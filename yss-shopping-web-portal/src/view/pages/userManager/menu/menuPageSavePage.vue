@@ -21,8 +21,8 @@
           <Select v-model="formValidate.parentMenuId" placeholder="请选择上级页面,没有不填" :clearable="true">
             <Option
               v-for="eachMenu in formValidate.parentMenuList"
-              :value="eachMenu.menuCode"
-              :key="eachMenu.menuCode"
+              :value="eachMenu.mid"
+              :key="eachMenu.mid"
             >{{ eachMenu.menuName }}</Option>
           </Select>
         </FormItem>
@@ -132,27 +132,37 @@ export default {
         if (valid) {
           let params = new Object();
           let parentMenuId = this.formValidate.parentMenuId;
-          params.parentId = 0; // TODO
+          params.parentId = parentMenuId == "" ? 0 : parentMenuId;
           params.menuType = 1;
           params.menuCode = this.formValidate.menuCode;
           params.menuName = this.formValidate.menuName;
           params.menuUrl = this.formValidate.menuUrl;
           params.remark = this.formValidate.remark;
-          console.log(JSON.stringify(params));
           saveSysMenuAPI(params).then(res => {
             if (res.data.code == 1) {
               this.$Notice.success({
                 desc: res.data.msg
               });
+              // 关闭模态窗
+              this.menuPageSavePageModalFlag = false;
+
+              // 刷新左侧菜单树列表
+              this.$parent.initMenuTreeData();
+
+              // 关闭页面详情和子菜单列表 TODO
+              // this.$parent.$parent.MenuDetailPageComponentRef.menuDetailPageShowFlag = false;
+              // this.$parent.$parent.MenuDetailPageComponentRef.showMenuChildrenPageFlag = false;
             } else if (res.data.code == 0) {
               this.$Notice.error({
-                // TODO
                 desc: res.data.msg
+              });
+              this.loadingFlag = false;
+              this.$nextTick(() => {
+                this.loadingFlag = true;
               });
             }
           });
         } else {
-          // TODO
           this.$Notice.error({
             desc: "内容不合法，请重新填写。"
           });
