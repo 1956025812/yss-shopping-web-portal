@@ -82,24 +82,6 @@ export default {
           key: "level",
           align: "center"
         },
-        // TODO 菜单这个不需要启用禁用
-        // {
-        //   title: "状态",
-        //   key: "menuStateName",
-        //   align: "center",
-        //   render: (h, params) => {
-        //     let tempMenuStateName = null;
-        //     switch (params.row.state) {
-        //       case 1:
-        //         tempMenuStateName = "启用";
-        //         break;
-        //       case 2:
-        //         tempMenuStateName = "禁用";
-        //         break;
-        //     }
-        //     return h("span", tempMenuStateName);
-        //   }
-        // },
         {
           title: "操作",
           key: "action",
@@ -107,22 +89,6 @@ export default {
           width: 300,
           render: (h, params) => {
             return h("div", [
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {}
-                  }
-                },
-                "详情"
-              ),
               h(
                 "Button",
                 {

@@ -17,18 +17,6 @@
           </Row>
           <Row>
             <Col span="10" style="float: left">
-              <FormItem label="URL">
-                <Input readonly v-model="menuUrl" />
-              </FormItem>
-            </Col>
-            <Col span="10" style="float: right">
-              <FormItem label="状态">
-                <Input readonly v-model="state" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="10" style="float: left">
               <FormItem label="层级">
                 <Input readonly v-model="level" />
               </FormItem>
@@ -36,6 +24,13 @@
             <Col span="10" style="float: right">
               <FormItem label="上级">
                 <Input readonly v-model="parentMenuName" />
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="10" style="float: left">
+              <FormItem label="URL">
+                <Input readonly v-model="menuUrl" />
               </FormItem>
             </Col>
           </Row>
@@ -79,7 +74,6 @@ export default {
       menuName: null,
       menuCode: null,
       menuUrl: null,
-      state: null,
       level: null,
       parentMenuName: null,
       remark: null
@@ -100,7 +94,6 @@ export default {
           this.menuName = res.data.data.menuName;
           this.menuCode = res.data.data.menuCode;
           this.menuUrl = res.data.data.menuUrl;
-          this.state = res.data.data.state;
           this.level = res.data.data.level;
           this.parentMenuName = res.data.data.parentMenuName;
           this.remark = res.data.data.remark;
