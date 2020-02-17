@@ -146,10 +146,8 @@ export default {
               // 关闭模态窗
               this.menuPageSavePageModalFlag = false;
 
-              // 刷新左侧菜单树列表
-              this.$parent.initMenuTreeData();
-
-              // 调用全局监听事件关闭页面详情和子菜单列表
+              // 调用全局监听事件刷新左侧菜单树列表并关闭页面详情和子菜单列表
+              this.bus.$emit("flushMenuTreeComponentEvent");
               this.bus.$emit("hideMenuDetailPageComponentEvent");
               this.bus.$emit("hideMenuChildrenPageComponentEvent");
             } else if (res.data.code == 0) {

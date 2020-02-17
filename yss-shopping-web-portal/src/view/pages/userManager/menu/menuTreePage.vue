@@ -101,7 +101,7 @@ export default {
     // 监听全局事件flushMenuTreeComponentEvent  刷新左侧菜单树全局事件
     let _this = this;
     this.bus.$on("flushMenuTreeComponentEvent", function(data) {
-      alert("TODO刷新菜单树数据");
+      _this.$options.methods.initMenuTreeData.bind(_this)();
     });
   }
 };
