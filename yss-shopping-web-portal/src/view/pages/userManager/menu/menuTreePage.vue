@@ -97,6 +97,12 @@ export default {
   created() {
     // 初始化左侧系统树数据
     this.$options.methods.initMenuTreeData.bind(this)();
+
+    // 监听全局事件flushMenuTreeComponentEvent  刷新左侧菜单树全局事件
+    let _this = this;
+    this.bus.$on("flushMenuTreeComponentEvent", function(data) {
+      alert("TODO刷新菜单树数据");
+    });
   }
 };
 </script>

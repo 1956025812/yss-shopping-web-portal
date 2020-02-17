@@ -40,6 +40,18 @@ export const saveSysMenuAPI = (params) => {
 }
 
 
+/**
+ * @description 修改菜单
+ */
+export const updateSysMenuAPI = (params) => {
+    return axios.request({
+        url: '/sysMenu/update',
+        method: 'post',
+        data: JSON.stringify(params),
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+
 
 
 

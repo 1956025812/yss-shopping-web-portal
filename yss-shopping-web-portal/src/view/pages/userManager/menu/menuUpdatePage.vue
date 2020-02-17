@@ -28,11 +28,11 @@
         <FormItem label="菜单名称" prop="menuName">
           <Input v-model="formValidate.menuName" placeholder="请输入菜单名称" />
         </FormItem>
-        <FormItem label="菜单类型" prop="menuTypeName">
+        <FormItem label="菜单类型" prop="menuType">
           <Input v-model="formValidate.menuTypeName" placeholder="请输入菜单名称" disabled />
         </FormItem>
         <FormItem label="菜单代码" prop="menuCode">
-          <Input v-model="formValidate.menuCode" readonly disabled />
+          <Input v-model="formValidate.menuCode" />
         </FormItem>
         <FormItem label="菜单URL" prop="menuUrl">
           <Input v-model="formValidate.menuUrl" placeholder="请输入菜单URL" />
@@ -73,6 +73,7 @@ export default {
         parentMenuId: "",
         parentMenuName: null,
         menuName: null,
+        menuType: null,
         menuTypeName: null,
         menuCode: null,
         menuUrl: null,
@@ -121,6 +122,7 @@ export default {
           this.formValidate.parentMenuId = res.data.data.parentId;
           this.formValidate.parentMenuName = res.data.data.parentMenuName;
           this.formValidate.menuName = res.data.data.menuName;
+          this.formValidate.menuType = res.data.data.menuType;
           this.formValidate.menuTypeName =
             res.data.data.menuType == 1 ? "页面" : "按钮";
           this.formValidate.menuCode = res.data.data.menuCode;
@@ -138,7 +140,48 @@ export default {
     /**
      * 修改菜单
      */
-    updateMenu() {}
+    updateMenu() {
+      this.$refs.FormValidateRef.validate(valid => {
+        if (valid) {
+          let params = new Object();
+          params.mid = this.mid;
+          params.menuName = this.formValidate.menuName;
+          params.menuCode = this.formValidate.menuCode;
+          params.menuUrl = this.formValidate.menuUrl;
+          params.remark = this.formValidate.remark;
+          updateSysMenuAPI(params).then(res => {
+            if (res.data.code == 1) {
+              this.$Notice.success({
+                desc: res.data.msg
+              });
+              // 关闭模态窗
+              this.menuUpdatePageModalFlag = false;
+
+              // 调用全局监听事件刷新左侧菜单树列表并关闭页面详情和子菜单列表
+              this.bus.$emit("flushMenuTreeComponentEvent");
+              this.bus.$emit("hideMenuDetailPageComponentEvent");
+              this.bus.$emit("hideMenuChildrenPageComponentEvent");
+            } else if (res.data.code == 0) {
+              this.$Notice.error({
+                desc: res.data.msg
+              });
+              this.loadingFlag = false;
+              this.$nextTick(() => {
+                this.loadingFlag = true;
+              });
+            }
+          });
+        } else {
+          this.$Notice.error({
+            desc: "内容不合法，请重新填写。"
+          });
+          this.loadingFlag = false;
+          this.$nextTick(() => {
+            this.loadingFlag = true;
+          });
+        }
+      });
+    }
   },
 
   created() {}
