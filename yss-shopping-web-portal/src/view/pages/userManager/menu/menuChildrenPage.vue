@@ -18,6 +18,8 @@
 
     <!-- 新增子菜单按钮弹窗组件 -->
     <MenuButtonSavePageComponent ref="MenuButtonSavePageComponentRef" style="display: none"></MenuButtonSavePageComponent>
+    <!-- 修改菜单详情弹窗组件 -->
+    <MenuUpdatePageComponent ref="MenuUpdatePageComponentRef" style="display: none"></MenuUpdatePageComponent>
   </div>
 </template>
 
@@ -27,11 +29,13 @@
 import { getToken } from "@/libs/util";
 import { selectSysMenuListAPI } from "@/api/userManager/menu.js";
 import MenuButtonSavePageComponent from "_p/userManager/menu/menuButtonSavePage.vue";
+import MenuUpdatePageComponent from "_p/userManager/menu/menuUpdatePage.vue";
 
 export default {
   name: "MenuChildrenPageComponent",
   components: {
-    MenuButtonSavePageComponent
+    MenuButtonSavePageComponent,
+    MenuUpdatePageComponent
   },
   data() {
     return {
@@ -100,7 +104,11 @@ export default {
                     marginRight: "5px"
                   },
                   on: {
-                    click: () => {}
+                    click: () => {
+                      this.$refs.MenuUpdatePageComponentRef.openMenuUpdatePageModal.bind(
+                        this
+                      )(params.row.mid);
+                    }
                   }
                 },
                 "修改"

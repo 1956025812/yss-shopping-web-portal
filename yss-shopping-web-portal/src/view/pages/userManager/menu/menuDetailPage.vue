@@ -47,29 +47,35 @@
           </Row>
           <Row>
             <FormItem>
-              <Button type="primary" style="margin-left: 8px">修改</Button>
+              <Button type="primary" style="margin-left: 8px" @click="openUpdateMenuModal()">修改</Button>
               <Button type="primary" style="margin-left: 8px">删除</Button>
             </FormItem>
           </Row>
         </Form>
       </Card>
     </div>
+
+    <!-- 修改菜单详情弹窗组件 -->
+    <MenuUpdatePageComponent ref="MenuUpdatePageComponentRef" style="display: none"></MenuUpdatePageComponent>
   </div>
 </template>
-
 
 
 <script>
 import { getToken } from "@/libs/util";
 import { selectSystemDetailAPI } from "@/api/system/system";
 import { selectSysMenuDetailAPI } from "@/api/userManager/menu.js";
+import MenuUpdatePageComponent from "_p/userManager/menu/menuUpdatePage.vue";
 
 export default {
   name: "MenuDetailPageComponent",
-  components: {},
+  components: {
+    MenuUpdatePageComponent
+  },
   data() {
     return {
       menuDetailPageShowFlag: false,
+      selectedNode: null,
       mid: null,
       menuName: null,
       menuCode: null,
@@ -86,6 +92,7 @@ export default {
      */
     selectMenuDetail(node) {
       this.menuDetailPageShowFlag = true;
+      this.selectedNode = node;
       this.mid = node.mid;
       let params = new Object();
       params.mid = node.mid;
@@ -103,6 +110,15 @@ export default {
           });
         }
       });
+    },
+
+    /**
+     * 打开修改菜单弹窗
+     */
+    openUpdateMenuModal() {
+      this.$refs.MenuUpdatePageComponentRef.openMenuUpdatePageModal.bind(this)(
+        this.selectedNode.mid
+      );
     }
   },
 
