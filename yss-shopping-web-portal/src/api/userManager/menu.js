@@ -54,6 +54,14 @@ export const updateSysMenuAPI = (params) => {
 
 
 
-
-
+/**
+ * @description 删除菜单 TODO 待改为post
+ */
+export const delSysMenuAPI = (params) => {
+    return axios.request({
+        url: '/sysMenu/del',
+        method: 'get',
+        params: params
+    });
+}
 

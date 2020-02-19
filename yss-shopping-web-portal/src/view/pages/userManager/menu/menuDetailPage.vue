@@ -48,7 +48,7 @@
           <Row>
             <FormItem>
               <Button type="primary" style="margin-left: 8px" @click="openUpdateMenuModal()">修改</Button>
-              <Button type="primary" style="margin-left: 8px">删除</Button>
+              <Button type="primary" style="margin-left: 8px" @click="openDelMenuModal()">删除</Button>
             </FormItem>
           </Row>
         </Form>
@@ -63,8 +63,10 @@
 
 <script>
 import { getToken } from "@/libs/util";
-import { selectSystemDetailAPI } from "@/api/system/system";
-import { selectSysMenuDetailAPI } from "@/api/userManager/menu.js";
+import {
+  selectSysMenuDetailAPI,
+  delSysMenuAPI
+} from "@/api/userManager/menu.js";
 import MenuUpdatePageComponent from "_p/userManager/menu/menuUpdatePage.vue";
 
 export default {
@@ -119,6 +121,36 @@ export default {
       this.$refs.MenuUpdatePageComponentRef.openMenuUpdatePageModal.bind(this)(
         this.selectedNode.mid
       );
+    },
+
+    /**
+     * 删除菜单
+     */
+    openDelMenuModal() {
+      this.$Modal.confirm({
+        title: "删除菜单",
+        content: "确认要删除菜单[" + this.selectedNode.title + "]么？",
+        onOk: () => {
+          let params = new Object();
+          params.mid = this.selectedNode.mid;
+          delSysMenuAPI(params).then(res => {
+            if (res.data.code == 1) {
+              this.$Notice.success({
+                desc: res.data.msg
+              });
+
+              // 调用全局监听事件刷新左侧菜单树列表并关闭页面详情和子菜单列表
+              this.bus.$emit("flushMenuTreeComponentEvent");
+              this.bus.$emit("hideMenuDetailPageComponentEvent");
+              this.bus.$emit("hideMenuChildrenPageComponentEvent");
+            } else if (res.data.code == 0) {
+              this.$Notice.error({
+                desc: res.data.msg
+              });
+            }
+          });
+        }
+      });
     }
   },
 

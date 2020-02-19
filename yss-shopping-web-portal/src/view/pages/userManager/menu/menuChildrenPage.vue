@@ -27,7 +27,7 @@
 
 <script>
 import { getToken } from "@/libs/util";
-import { selectSysMenuListAPI } from "@/api/userManager/menu.js";
+import { selectSysMenuListAPI, delSysMenuAPI } from "@/api/userManager/menu.js";
 import MenuButtonSavePageComponent from "_p/userManager/menu/menuButtonSavePage.vue";
 import MenuUpdatePageComponent from "_p/userManager/menu/menuUpdatePage.vue";
 
@@ -121,7 +121,9 @@ export default {
                     size: "small"
                   },
                   on: {
-                    click: () => {}
+                    click: () => {
+                      this.openDelSysMenuModal.bind(this)(params.row);
+                    }
                   }
                 },
                 "删除"
@@ -170,6 +172,36 @@ export default {
       this.$refs.MenuButtonSavePageComponentRef.openMenuButtonSavePageModal(
         this.selectedNode
       );
+    },
+
+    /**
+     * 删除菜单
+     */
+    openDelSysMenuModal(row) {
+      this.$Modal.confirm({
+        title: "删除菜单",
+        content: "确认要删除菜单[" + row.menuName + "]么？",
+        onOk: () => {
+          let params = new Object();
+          params.mid = row.mid;
+          delSysMenuAPI(params).then(res => {
+            if (res.data.code == 1) {
+              this.$Notice.success({
+                desc: res.data.msg
+              });
+
+              // 调用全局监听事件刷新左侧菜单树列表并关闭页面详情和子菜单列表
+              this.bus.$emit("flushMenuTreeComponentEvent");
+              this.bus.$emit("hideMenuDetailPageComponentEvent");
+              this.bus.$emit("hideMenuChildrenPageComponentEvent");
+            } else if (res.data.code == 0) {
+              this.$Notice.error({
+                desc: res.data.msg
+              });
+            }
+          });
+        }
+      });
     }
   },
 
