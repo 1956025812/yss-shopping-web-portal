@@ -14,3 +14,16 @@ export const selectSysRoleListAPI = (params) => {
 
 
 
+/**
+ * @description 查询角色详情
+ */
+export const selectSysRoleDetailAPI = (params) => {
+    return axios.request({
+        url: '/sysRole/detail',
+        method: 'get',
+        params: params
+    });
+}
+
+
+

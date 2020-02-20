@@ -4,7 +4,7 @@
       <p slot="title">角色列表</p>
       <Button slot="extra" type="primary">新增角色</Button>
       <div>
-        <Tree ref="RoleTreePageRef" :data="roleTreeData"></Tree>
+        <Tree ref="RoleTreePageRef" :data="roleTreeData" @on-select-change="clickRoleTreeNode"></Tree>
       </div>
     </Card>
   </div>
@@ -68,6 +68,14 @@ export default {
         }
       });
       return treeDataArray;
+    },
+
+    /**
+     * 点击角色树节点事件
+     */
+    clickRoleTreeNode(nodes, node) {
+      // 通过自定义的方法传递选中的节点数据到父组件中
+      this.$emit("clickRoleTreeNode2ParentEvent", node);
     }
   },
 
