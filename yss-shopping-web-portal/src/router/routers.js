@@ -148,6 +148,16 @@ export default [
           notCache: true
         },
         component: () => import('_p/userManager/menu/menuPage.vue')
+      },
+      {
+        name: 'rolePage',
+        path: '/rolePage',
+        meta: {
+          icon: 'md-apps',
+          title: '角色列表',
+          notCache: true
+        },
+        component: () => import('_p/userManager/role/rolePage.vue')
       }
     ]
   },
