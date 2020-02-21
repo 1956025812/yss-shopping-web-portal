@@ -21,7 +21,7 @@
 
         <!-- 右下: 子角色列表  -->
         <div>
-          <!-- <RoleChildrenPageComponent ref="RoleChildrenPageComponentRef"></RoleChildrenPageComponent> -->
+          <RoleChildrenPageComponent ref="RoleChildrenPageComponentRef"></RoleChildrenPageComponent>
         </div>
       </div>
     </Split>
@@ -33,9 +33,14 @@
 import { setToken, getToken, removeArrayElement } from "@/libs/util.js";
 import RoleTreePageComponent from "_p/userManager/role/roleTreePage.vue";
 import RoleDetailPageComponent from "_p/userManager/role/roleDetailPage.vue";
+import RoleChildrenPageComponent from "_p/userManager/role/roleChildrenPage.vue";
 
 export default {
-  components: { RoleTreePageComponent, RoleDetailPageComponent },
+  components: {
+    RoleTreePageComponent,
+    RoleDetailPageComponent,
+    RoleChildrenPageComponent
+  },
   data() {
     return {
       leftRightSplit: 0.2
@@ -51,7 +56,7 @@ export default {
       this.$options.methods.selectRoleDetail.bind(this)(node);
 
       // 查看右下侧子角色列表
-      // this.$options.methods.selectRoleChildrenList.bind(this)(node);
+      this.$options.methods.selectRoleChildrenList.bind(this)(node);
     },
 
     /**
@@ -65,7 +70,7 @@ export default {
      * 查看子角色列表
      */
     selectRoleChildrenList(node) {
-      // this.$refs.RoleChildrenPageComponentRef.selectRoleChildrenList(node);
+      this.$refs.RoleChildrenPageComponentRef.selectRoleChildrenList(node);
     }
   },
 

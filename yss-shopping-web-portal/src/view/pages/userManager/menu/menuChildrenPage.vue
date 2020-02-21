@@ -145,7 +145,7 @@ export default {
       this.selectedNode = node;
 
       let params = new Object();
-      params.parmentId = node.mid;
+      params.parentId = node.mid;
       selectSysMenuListAPI(params).then(res => {
         if (res.data.code == 1) {
           this.menuChildrenListTableData = res.data.data;
