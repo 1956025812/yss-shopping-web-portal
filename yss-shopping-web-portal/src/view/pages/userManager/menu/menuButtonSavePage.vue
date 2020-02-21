@@ -51,10 +51,7 @@
  
 <script>
 import { getToken } from "@/libs/util";
-import {
-  selectSysMenuDetailAPI,
-  saveSysMenuAPI
-} from "@/api/userManager/menu.js";
+import { saveSysMenuAPI } from "@/api/userManager/menu.js";
 
 export default {
   name: "MenuButtonSavePageComponent",

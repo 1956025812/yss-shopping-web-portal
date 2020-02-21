@@ -27,3 +27,16 @@ export const selectSysRoleDetailAPI = (params) => {
 
 
 
+/**
+ * @description 新增菜单
+ */
+export const saveSysRoleAPI = (params) => {
+    return axios.request({
+        url: '/sysRole/save',
+        method: 'post',
+        data: JSON.stringify(params),
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+
+

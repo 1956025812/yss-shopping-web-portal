@@ -2,20 +2,24 @@
   <div>
     <Card>
       <p slot="title">角色列表</p>
-      <Button slot="extra" type="primary">新增角色</Button>
+      <Button slot="extra" type="primary" @click="openRoleSavePageModal">新增角色</Button>
       <div>
         <Tree ref="RoleTreePageRef" :data="roleTreeData" @on-select-change="clickRoleTreeNode"></Tree>
       </div>
     </Card>
+
+    <!-- 新增角色弹窗组件 -->
+    <RoleSavePageComponent ref="RoleSavePageComponentRef" style="display: none"></RoleSavePageComponent>
   </div>
 </template>
 <script>
 import { getToken } from "@/libs/util.js";
 import { selectSysRoleListAPI } from "@/api/userManager/role.js";
+import RoleSavePageComponent from "_p/userManager/role/roleSavePage.vue";
 
 export default {
   name: "RoleTreePageComponent",
-  components: {},
+  components: { RoleSavePageComponent },
   data() {
     return {
       roleTreeData: []
@@ -76,6 +80,13 @@ export default {
     clickRoleTreeNode(nodes, node) {
       // 通过自定义的方法传递选中的节点数据到父组件中
       this.$emit("clickRoleTreeNode2ParentEvent", node);
+    },
+
+    /**
+     * 打开新增角色弹窗组建
+     */
+    openRoleSavePageModal() {
+      this.$refs.RoleSavePageComponentRef.openRoleSavePageModal();
     }
   },
 
