@@ -17,7 +17,7 @@
       :loading="loadingFlag"
     >
       <Form ref="FormValidateRef" :model="formValidate" :rules="ruleValidate" :label-width="80">
-        <FormItem label="上级角色" prop="parentId">
+        <FormItem label="上级角色" prop="parentRoleId">
           <Select v-model="formValidate.parentRoleId" placeholder="请选择上级角色,没有不填" :clearable="true">
             <Option
               v-for="eachRole in formValidate.parentRoleList"
@@ -111,7 +111,7 @@ export default {
     /**
      * 新增角色按钮
      */
-    saveRoleButton() {
+    saveRole() {
       this.$refs.FormValidateRef.validate(valid => {
         if (valid) {
           let params = new Object();
