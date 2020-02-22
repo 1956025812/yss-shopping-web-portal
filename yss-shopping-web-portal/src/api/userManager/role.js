@@ -40,3 +40,16 @@ export const saveSysRoleAPI = (params) => {
 }
 
 
+
+/**
+ * @description 修改菜单
+ */
+export const updateSysRoleAPI = (params) => {
+    return axios.request({
+        url: '/sysRole/update',
+        method: 'post',
+        data: JSON.stringify(params),
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+

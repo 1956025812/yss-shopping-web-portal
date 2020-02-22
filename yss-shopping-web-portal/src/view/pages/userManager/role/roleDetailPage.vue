@@ -48,6 +48,9 @@
         </Form>
       </Card>
     </div>
+
+    <!-- 修改角色详情弹窗组件 -->
+    <RoleUpdatePageComponent ref="RoleUpdatePageComponentRef" style="display:none"></RoleUpdatePageComponent>
   </div>
 </template>
 
@@ -58,10 +61,11 @@ import {
   selectSysRoleDetailAPI,
   delSysRoleAPI
 } from "@/api/userManager/role.js";
+import RoleUpdatePageComponent from "_p/userManager/role/roleUpdatePage.vue";
 
 export default {
   name: "RoleDetailPageComponent",
-  components: {},
+  components: { RoleUpdatePageComponent },
   data() {
     return {
       roleDetailPageShowFlag: false,
@@ -108,7 +112,11 @@ export default {
     /**
      * 打开修改角色弹窗
      */
-    openUpdateRoleModal() {},
+    openUpdateRoleModal() {
+      this.$refs.RoleUpdatePageComponentRef.openRoleUpdatePageModal.bind(this)(
+        this.selectedNode.rid
+      );
+    },
 
     /**
      * 删除角色

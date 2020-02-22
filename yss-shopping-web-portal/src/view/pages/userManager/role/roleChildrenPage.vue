@@ -9,6 +9,9 @@
         </div>
       </Card>
     </div>
+
+    <!-- 修改角色详情弹窗组件 -->
+    <RoleUpdatePageComponent ref="RoleUpdatePageComponentRef" style="display:none"></RoleUpdatePageComponent>
   </div>
 </template>
 
@@ -17,10 +20,11 @@
 <script>
 import { getToken } from "@/libs/util";
 import { selectSysRoleListAPI } from "@/api/userManager/role.js";
+import RoleUpdatePageComponent from "_p/userManager/role/roleUpdatePage.vue";
 
 export default {
   name: "RoleChildrenPageComponent",
-  components: {},
+  components: { RoleUpdatePageComponent },
   data() {
     return {
       showRoleChildrenPageFlag: false,
@@ -82,7 +86,11 @@ export default {
                     marginRight: "5px"
                   },
                   on: {
-                    click: () => {}
+                    click: () => {
+                      this.$refs.RoleUpdatePageComponentRef.openRoleUpdatePageModal.bind(
+                        this
+                      )(params.row.rid);
+                    }
                   }
                 },
                 "修改"
