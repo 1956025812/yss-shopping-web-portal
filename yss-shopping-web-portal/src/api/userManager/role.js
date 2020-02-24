@@ -28,7 +28,7 @@ export const selectSysRoleDetailAPI = (params) => {
 
 
 /**
- * @description 新增菜单
+ * @description 新增角色
  */
 export const saveSysRoleAPI = (params) => {
     return axios.request({
@@ -42,7 +42,7 @@ export const saveSysRoleAPI = (params) => {
 
 
 /**
- * @description 修改菜单
+ * @description 修改角色
  */
 export const updateSysRoleAPI = (params) => {
     return axios.request({
@@ -52,4 +52,18 @@ export const updateSysRoleAPI = (params) => {
         headers: { 'Content-Type': 'application/json' }
     });
 }
+
+
+
+/**
+ * @description 删除角色
+ */
+export const delSysRoleAPI = (params) => {
+    return axios.request({
+        url: '/sysRole/del',
+        method: 'get',
+        params: params
+    });
+}
+
 

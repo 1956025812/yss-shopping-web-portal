@@ -128,15 +128,16 @@ export default {
         onOk: () => {
           let params = new Object();
           params.rid = this.selectedNode.rid;
-          delSysroleAPI(params).then(res => {
+          delSysRoleAPI(params).then(res => {
             if (res.data.code == 1) {
               this.$Notice.success({
                 desc: res.data.msg
               });
 
-              // 调用全局监听事件刷新左侧角色树列表并关闭页面详情和子角色列表
+              // 调用全局监听事件刷新左侧角色树列表并关闭角色详情和子角色列表
               this.bus.$emit("flushRoleTreeComponentEvent");
               this.bus.$emit("hideRoleDetailPageComponentEvent");
+              this.bus.$emit("hideRoleChildrenPageComponentEvent");
             } else if (res.data.code == 0) {
               this.$Notice.error({
                 desc: res.data.msg

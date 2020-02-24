@@ -19,7 +19,7 @@
 
 <script>
 import { getToken } from "@/libs/util";
-import { selectSysRoleListAPI } from "@/api/userManager/role.js";
+import { selectSysRoleListAPI, delSysRoleAPI } from "@/api/userManager/role.js";
 import RoleUpdatePageComponent from "_p/userManager/role/roleUpdatePage.vue";
 
 export default {
@@ -103,7 +103,9 @@ export default {
                     size: "small"
                   },
                   on: {
-                    click: () => {}
+                    click: () => {
+                      this.openDelSysRoleModal.bind(this)(params.row);
+                    }
                   }
                 },
                 "删除"
@@ -131,6 +133,36 @@ export default {
         } else if (res.data.code == 0) {
           this.$Notice.error({
             desc: res.data.msg
+          });
+        }
+      });
+    },
+
+    /**
+     * 删除角色
+     */
+    openDelSysRoleModal(row) {
+      this.$Modal.confirm({
+        title: "删除角色",
+        content: "确认要删除角色[" + row.roleName + "]么？",
+        onOk: () => {
+          let params = new Object();
+          params.rid = row.rid;
+          delSysRoleAPI(params).then(res => {
+            if (res.data.code == 1) {
+              this.$Notice.success({
+                desc: res.data.msg
+              });
+
+              // 调用全局监听事件刷新左侧角色树列表并关闭角色详情和子角色列表
+              this.bus.$emit("flushRoleTreeComponentEvent");
+              this.bus.$emit("hideRoleDetailPageComponentEvent");
+              this.bus.$emit("hideRoleChildrenPageComponentEvent");
+            } else if (res.data.code == 0) {
+              this.$Notice.error({
+                desc: res.data.msg
+              });
+            }
           });
         }
       });
