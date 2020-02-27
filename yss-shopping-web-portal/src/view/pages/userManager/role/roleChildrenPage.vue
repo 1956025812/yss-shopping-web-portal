@@ -87,6 +87,24 @@ export default {
                   },
                   on: {
                     click: () => {
+                      this.updateRoleState.bind(this)(params.row.rid);
+                    }
+                  }
+                },
+                params.row.state == 1 ? "禁用" : "启用"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
                       this.$refs.RoleUpdatePageComponentRef.openRoleUpdatePageModal.bind(
                         this
                       )(params.row.rid);
@@ -137,6 +155,11 @@ export default {
         }
       });
     },
+
+    /**
+     * 修改角色状态
+     */
+    updateRoleState(rid) {},
 
     /**
      * 删除角色
